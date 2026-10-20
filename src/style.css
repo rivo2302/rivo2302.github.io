@@ -452,3 +452,79 @@ section { padding: 96px var(--pad-x); }
   .btn { white-space: normal; text-align: left; }
   .footer__links { flex-wrap: wrap; gap: 16px; }
 }
+
+/* ---------- Motion (CSS only; skipped entirely for reduced-motion users) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  /* Hero: staggered entrance on load */
+  @keyframes rise { from { opacity: 0; translate: 0 24px; } }
+  @keyframes slide-in { from { opacity: 0; translate: 32px 0; } }
+  .hero__copy > * { animation: rise .7s cubic-bezier(.2, .7, .2, 1) both; }
+  .hero__copy > :nth-child(2) { animation-delay: .08s; }
+  .hero__title span { animation: rise .7s .2s cubic-bezier(.2, .7, .2, 1) both; }
+  .hero__copy > :nth-child(3) { animation-delay: .28s; }
+  .hero__copy > :nth-child(4) { animation-delay: .36s; }
+  .hero__copy > :nth-child(5) { animation-delay: .44s; }
+  .idcard { animation: slide-in .9s .2s cubic-bezier(.2, .7, .2, 1) both; }
+
+  /* Scroll reveal: elements fade up as they enter the viewport (progressive enhancement) */
+  @supports (animation-timeline: view()) {
+    @keyframes reveal { from { opacity: 0; translate: 0 32px; } }
+    @keyframes reveal-zoom { from { opacity: 0; scale: .94; } }
+    :is(.head, .stat, .profil__vision, .profil__body > *, .card, .mity__intro, .benefits li, .oss__card, .process,
+        .parcours__intro > *, .job, .socle, .formations__col > *, .engagement__left > *, .engagement__right > *,
+        .rdv__copy > *, .booking, .contact__direct > *, .form, .footer__top > *) {
+      animation: reveal both cubic-bezier(.2, .7, .2, 1);
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+    .mity__shot { animation: reveal-zoom both ease-out; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+    /* Stagger items sitting on the same row */
+    :is(.grid3 > *, .benefits li, .oss__card, .stat):nth-child(3n + 2) { animation-range: entry 8% entry 53%; }
+    :is(.grid3 > *, .benefits li, .oss__card, .stat):nth-child(3n + 3) { animation-range: entry 16% entry 61%; }
+  }
+
+  /* Header gains depth once the page scrolls */
+  @supports (animation-timeline: scroll()) {
+    @keyframes nav-raise { to { background: rgba(247, 248, 249, .96); box-shadow: 0 8px 24px rgba(8, 44, 56, .08); } }
+    .nav { animation: nav-raise linear both; animation-timeline: scroll(); animation-range: 0 160px; }
+  }
+
+  /* Hover micro-interactions (transform composes with the reveal's `translate`) */
+  .card, .benefits li, .oss__card, .cert, .community, .booking, .idcard, .socle {
+    transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s;
+  }
+  .card:hover, .benefits li:hover, .oss__card:hover, .cert:hover, .community:hover {
+    transform: translateY(-4px); box-shadow: 0 16px 32px rgba(8, 44, 56, .1);
+  }
+  .idcard:hover { transform: translateY(-6px); }
+  .idcard__portrait img { transition: scale .6s cubic-bezier(.2, .7, .2, 1); }
+  .idcard:hover .idcard__portrait img { scale: 1.04; }
+  .icon-box { transition: transform .35s cubic-bezier(.2, .7, .2, 1); }
+  .card:hover .icon-box { transform: rotate(-6deg) scale(1.08); }
+
+  .btn img, .socials img, .stats__explore img, .footer__top-link img, .oss__meta a img, .idcard__name a img { transition: translate .25s; }
+  :is(.btn, .socials a, .oss__meta a, .idcard__name a):hover img { translate: 2px -2px; }
+  :is(.btn[href^="#"], .stats__explore):hover img { translate: 0 3px; }
+  .footer__top-link:hover img { translate: 0 -3px; }
+
+  .tag { transition: background-color .2s, color .2s; }
+  .tag:hover { background: var(--mint); }
+  .tag--dark:hover { background: var(--green); color: #fff; }
+
+  /* Animated underline for text links */
+  .nav__links > a, .footer__nav a, .footer__links a {
+    background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat; transition: background-size .3s;
+  }
+  .nav__links > a:hover, .footer__nav a:hover, .footer__links a:hover { text-decoration: none; background-size: 100% 1px; }
+
+  /* Current job: soft pulse on the timeline marker */
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(25, 111, 102, .45); } 100% { box-shadow: 0 0 0 10px rgba(25, 111, 102, 0); } }
+  .job:first-child .job__row > img { border-radius: 50%; animation: pulse 2s ease-out infinite; }
+
+  /* Certified badge: one gentle shine on load */
+  @keyframes shine { from { background-position: 150% 0; } to { background-position: -50% 0; } }
+  .pill--certified {
+    background: linear-gradient(110deg, var(--mint) 40%, #e9f8f6 50%, var(--mint) 60%) 150% 0 / 250% 100% no-repeat, var(--mint);
+    animation: shine 1.6s 1s ease-in-out both;
+  }
+}
