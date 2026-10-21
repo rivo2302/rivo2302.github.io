@@ -3,6 +3,7 @@ import '@fontsource-variable/inter'
 import '@fontsource/nunito-sans/latin-600.css'
 import '@fontsource/nunito-sans/latin-700.css'
 import './style.css'
+import { initMotion } from './motion'
 
 const CONTACT_EMAIL = 'rivo2302@gmail.com'
 
@@ -25,3 +26,5 @@ form?.addEventListener('submit', (event) => {
   // URLSearchParams encodes spaces as "+", which mail clients show literally.
   window.location.href = `mailto:${CONTACT_EMAIL}?${params.toString().replaceAll('+', '%20')}`
 })
+
+initMotion()
