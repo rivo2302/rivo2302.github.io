@@ -27,4 +27,20 @@ form?.addEventListener('submit', (event) => {
   window.location.href = `mailto:${CONTACT_EMAIL}?${params.toString().replaceAll('+', '%20')}`
 })
 
+// "Prendre rendez-vous" opens the booking agenda in a modal instead of leaving the site.
+const modal = document.querySelector<HTMLDialogElement>('#booking-modal')
+const frame = modal?.querySelector<HTMLIFrameElement>('iframe')
+
+document.querySelectorAll<HTMLAnchorElement>('[data-booking]').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    if (!modal || !frame || event.metaKey || event.ctrlKey || event.shiftKey) return // let modified clicks open a tab
+    event.preventDefault()
+    frame.src ||= frame.dataset.src ?? '' // load the agenda on first open only
+    modal.showModal()
+  })
+})
+modal?.querySelector('.modal__close')?.addEventListener('click', () => modal.close())
+// Click on the backdrop closes the modal.
+modal?.addEventListener('click', (event) => { if (event.target === modal) modal.close() })
+
 initMotion()
