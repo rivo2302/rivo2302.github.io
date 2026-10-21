@@ -27,13 +27,16 @@ function countUp() {
 
 /** Highlight the nav link of the section currently on screen. */
 function scrollSpy() {
-  const links = new Map<string, HTMLAnchorElement>()
-  document.querySelectorAll<HTMLAnchorElement>('.nav__links > a[href^="#"]').forEach((a) => links.set(a.hash.slice(1), a))
+  const links = new Map<string, HTMLAnchorElement[]>()
+  document.querySelectorAll<HTMLAnchorElement>('.nav__links > a[href^="#"], .rail a').forEach((a) => {
+    const id = a.hash.slice(1)
+    links.set(id, [...(links.get(id) ?? []), a])
+  })
   const io = new IntersectionObserver((entries) => {
     for (const entry of entries) {
       if (!entry.isIntersecting) continue
-      links.forEach((a) => a.removeAttribute('aria-current'))
-      links.get(entry.target.id)?.setAttribute('aria-current', 'true')
+      links.forEach((group) => group.forEach((a) => a.removeAttribute('aria-current')))
+      links.get(entry.target.id)?.forEach((a) => a.setAttribute('aria-current', 'true'))
     }
   }, { rootMargin: '-45% 0px -50% 0px' })
   links.forEach((_, id) => {

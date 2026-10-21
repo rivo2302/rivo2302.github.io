@@ -80,6 +80,19 @@
 </head>
 <body id="top">
   <a class="skip" href="#contenu">Aller au contenu</a>
+  <div class="stage" aria-hidden="true"><span></span><span></span><span></span></div>
+  <nav class="rail" aria-label="Progression dans la page">
+    <span class="rail__bar" aria-hidden="true"></span>
+    <a href="#accueil"><span>Accueil</span></a>
+    <a href="#profil"><span>Profil</span></a>
+    <a href="#projets"><span>Side projects</span></a>
+    <a href="#expertise"><span>Expertise</span></a>
+    <a href="#parcours"><span>Parcours</span></a>
+    <a href="#stack"><span>Stack technique</span></a>
+    <a href="#formations"><span>Formations</span></a>
+    <a href="#rendez-vous"><span>Rendez-vous</span></a>
+    <a href="#contact"><span>Contact</span></a>
+  </nav>
 
   <header class="nav">
     <a class="brand" href="#top" aria-label="Rivo Lalaina — accueil">
@@ -105,8 +118,7 @@
 
   <main id="contenu">
     <!-- Accueil -->
-    <section class="hero tex" style="--tex-op:.07;--tex-overlay:rgba(247,248,249,.93)">
-      <div class="aurora" aria-hidden="true"><span></span><span></span><span></span></div>
+    <section id="accueil" class="hero">
       <div class="hero__copy">
         <div class="hero__badges">
           <span class="pill pill--certified"><img src="/src/assets/icons/badge-check-sm.svg" width="19" height="19" alt="" />Certifié Odoo 18</span>
@@ -154,7 +166,7 @@
     </div>
 
     <!-- Profil -->
-    <section id="profil" class="profil tex" style="--tex-op:.06;--tex-overlay:rgba(255,255,255,.94)">
+    <section id="profil" class="profil">
       <div class="profil__vision">
         <p class="eyebrow">Profil</p>
         <h2 class="profil__title">Un regard technique. Une attention métier.</h2>
@@ -286,7 +298,7 @@
     </section>
 
     <!-- Parcours -->
-    <section id="parcours" class="parcours tex" style="--tex-op:.05;--tex-overlay:rgba(255,255,255,.95)">
+    <section id="parcours" class="parcours">
       <div class="parcours__intro">
         <p class="eyebrow">Parcours</p>
         <h2 class="parcours__title">Une expertise qui se construit sur le terrain.</h2>
@@ -367,6 +379,7 @@
         </div>
       </div>
       <div class="socle tex" style="--tex-op:.2;--tex-overlay:rgba(25,111,102,.85)">
+        <span class="socle__glint" aria-hidden="true"></span>
         <p class="socle__name"><img src="/src/assets/icons/layers.svg" width="26" height="26" alt="" /><strong>Odoo</strong><span>Community &amp; Enterprise</span></p>
         <p>Versions 12 à 19</p>
       </div>
@@ -428,7 +441,7 @@
     </section>
 
     <!-- Personnalité -->
-    <section class="engagement tex" style="--tex-op:.1;--tex-overlay:rgba(244,251,249,.9)">
+    <section class="engagement">
       <div class="engagement__left">
         <p class="eyebrow">Personnalité &amp; langues</p>
         <h2 class="engagement__title">Le goût du collectif. L’envie de partager.</h2>
@@ -519,10 +532,10 @@
     </section>
   </main>
 
-  <footer class="footer tex" style="--tex-op:.06;--tex-overlay:rgba(244,251,249,.94)">
+  <footer class="footer">
     <div class="footer__top">
       <div class="footer__sign">
-        <p class="footer__name">Rivo Lalaina.</p>
+        <p class="footer__name"><span class="sr-only">Rivo Lalaina.</span><span aria-hidden="true"><span class="word"><span class="l" style="--i:0">R</span><span class="l" style="--i:1">i</span><span class="l" style="--i:2">v</span><span class="l" style="--i:3">o</span></span> <span class="word"><span class="l" style="--i:4">L</span><span class="l" style="--i:5">a</span><span class="l" style="--i:6">l</span><span class="l" style="--i:7">a</span><span class="l" style="--i:8">i</span><span class="l" style="--i:9">n</span><span class="l" style="--i:10">a</span><span class="l" style="--i:11">.</span></span></span></p>
         <p>Consultant technique Odoo · Antananarivo, Madagascar</p>
       </div>
       <nav class="footer__nav" aria-label="Plan du site">
