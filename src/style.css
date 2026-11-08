@@ -481,14 +481,43 @@ body:has(.modal[open]) { overflow: hidden; }
   .modal__out { display: none; }
 }
 
-/* Motion: one entrance, quiet scroll reveals, nothing that loops */
+/* Motion: one entrance, quiet scroll reveals, the "a → b → c" flows write themselves. Nothing loops. */
 @media (prefers-reduced-motion: no-preference) {
   @keyframes rise { from { opacity: 0; translate: 0 12px; } }
-  .hero__copy > *, .idcard { animation: rise .5s var(--ease) both; }
-  .hero__copy > :nth-child(2) { animation-delay: .05s; }
-  .hero__copy > :nth-child(3) { animation-delay: .1s; }
-  .hero__copy > :nth-child(4) { animation-delay: .15s; }
-  .idcard { animation-delay: .2s; }
+  @keyframes settle { from { opacity: 0; scale: 1.06; } }
+  .hero__copy > *, .hero__accent, .idcard { animation: rise .5s var(--ease) both; }
+  .hero__accent { animation-delay: .08s; }
+  .hero__copy > :nth-child(3) { animation-delay: .14s; }
+  .hero__copy > :nth-child(4) { animation-delay: .2s; }
+  .idcard { animation-delay: .12s; }
+  .idcard__portrait img { animation: settle .9s .2s var(--ease) both; }
+
+  /* Signature: each step of a flow appears after the previous one (steps are split by motion.ts) */
+  .motion :is(.flow__step, .flow__arrow) {
+    display: inline-block; opacity: 0; translate: -4px 0;
+    transition: opacity .4s var(--ease), translate .4s var(--ease); transition-delay: calc(var(--i) * 160ms);
+  }
+  .motion .flow__arrow { transition-delay: calc(var(--i) * 160ms - 80ms); }
+  .motion .is-in :is(.flow__step, .flow__arrow) { opacity: 1; translate: 0 0; }
+
+  /* Process: the line traces left to right, each step lights up as it passes */
+  .process ol::after {
+    content: ""; position: absolute; top: -1px; left: 0; right: 0; height: 1px; background: var(--accent);
+    transform-origin: left; scale: 0 1; transition: scale 1.2s var(--ease);
+  }
+  .process.is-in ol::after { scale: 1 1; }
+  @media (max-width: 1024px) { .process ol::after { content: none; } }
+  .process li::before { transition: background-color .3s var(--ease); }
+  .process.is-in li::before { background: var(--accent); }
+  .process li:nth-child(2)::before { transition-delay: .3s; }
+  .process li:nth-child(3)::before { transition-delay: .6s; }
+  .process li:nth-child(4)::before { transition-delay: .9s; }
+
+  /* Arrows point where the link goes */
+  :is(.btn, .oss__url, .socials a, .stats__explore, .idcard__cv, .idcard__name a, .footer__top-link) img { transition: translate .15s var(--ease); }
+  :is(.btn, .oss__url, .socials a, .idcard__cv, .idcard__name a):hover img { translate: 2px -2px; }
+  :is(.btn[href^="#"], .stats__explore):hover img { translate: 0 2px; }
+  .footer__top-link:hover img { translate: 0 -2px; }
 
   .modal, .modal::backdrop { transition: opacity .2s var(--ease), translate .2s var(--ease), display .2s allow-discrete, overlay .2s allow-discrete; }
   .modal { opacity: 0; translate: 0 8px; }
@@ -505,6 +534,10 @@ body:has(.modal[open]) { overflow: hidden; }
         .stack__list, .formations__col, .engagement__left, .engagement__right, .rdv__copy, .booking, .contact__direct, .form) {
       animation: rise both var(--ease); animation-timeline: view(); animation-range: entry 0% entry 40%;
     }
+    /* Mity screenshot comes forward as it scrolls in */
+    @keyframes shot-in { from { opacity: .4; scale: .94; } }
+    .mity__shot img { transform-origin: 50% 100%; animation: shot-in both var(--ease); animation-timeline: view(); animation-range: entry 0% cover 35%; }
+
     /* The timeline line draws itself as you read */
     @keyframes draw-y { from { scale: 1 0; } }
     @media (min-width: 1025px) {

@@ -44,7 +44,46 @@ function scrollSpy() {
   })
 }
 
+/** Split "a → b → c" flows into steps so they can light up in order. */
+function flows() {
+  document.querySelectorAll<HTMLElement>('.flow').forEach((el) => {
+    const parts = (el.textContent ?? '').split(' → ')
+    el.replaceChildren()
+    parts.forEach((part, i) => {
+      if (i) {
+        const arrow = document.createElement('span')
+        arrow.className = 'flow__arrow'
+        arrow.setAttribute('aria-hidden', 'true')
+        arrow.style.setProperty('--i', String(i))
+        arrow.textContent = '→'
+        el.append(' ', arrow, ' ')
+      }
+      const step = document.createElement('span')
+      step.className = 'flow__step'
+      step.style.setProperty('--i', String(i))
+      step.textContent = part
+      el.append(step)
+    })
+  })
+}
+
+/** Mark sequences as "in" once they are on screen; CSS plays the stagger. */
+function sequences() {
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue
+      entry.target.classList.add('is-in')
+      io.unobserve(entry.target)
+    }
+  }, { threshold: 0.6 })
+  document.querySelectorAll('.flow, .process').forEach((el) => io.observe(el))
+}
+
 export function initMotion() {
   scrollSpy()
-  if (!reducedMotion) countUp()
+  if (reducedMotion) return
+  document.documentElement.classList.add('motion')
+  flows()
+  sequences()
+  countUp()
 }
