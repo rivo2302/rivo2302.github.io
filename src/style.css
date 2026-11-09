@@ -148,11 +148,6 @@ section { padding: 96px var(--pad-x); }
 .profil__body { flex: 1; display: flex; flex-direction: column; gap: 24px; }
 .profil__lead { font-size: 22px; line-height: 1.6; }
 .profil__text { font-size: 17px; line-height: 1.6; color: var(--text-2); }
-.callout {
-  display: flex; gap: 12px; padding: 16px 20px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line);
-  font-size: 15px; line-height: 1.6; color: var(--text-2);
-}
-.callout img { margin-top: 3px; }
 
 /* Side projects */
 .projets { display: flex; flex-direction: column; gap: 48px; background: var(--navy); }
@@ -250,10 +245,8 @@ section { padding: 96px var(--pad-x); }
 .socle__name strong { font-size: 20px; font-weight: 500; color: var(--text); }
 .socle__versions { font: 13px/20px var(--mono); color: var(--accent); }
 .stack__list { border-top: 1px solid var(--line); }
-.stack__row { display: grid; grid-template-columns: 256px 1fr 296px; align-items: center; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.stack__row { display: grid; grid-template-columns: 256px 1fr; align-items: center; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--line); }
 .stack__row h3 { display: flex; align-items: center; gap: 12px; font-size: 18px; }
-.stack__note { font-size: 14px; line-height: 1.6; color: var(--muted); }
-.stack__note:empty { display: none; }
 
 /* Formations */
 .formations { display: flex; flex-direction: column; gap: 48px; }
